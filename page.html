@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+  <script type="text/javascript" src="script.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <style>
+    body {
+    background: black;
+    color: white;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    }
+    #svgj {
+    overflow: hidden;
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    }
+    .clear {
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    margin-left: -4em;
+    top: 90%;
+    background-color: #FFFFFF;
+    color: black;
+    padding: .5em 1em .5em 1em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10%;
+    display: inline-block;
+    }
+    .move {
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    margin-left: 3em;
+    top: 90%;
+    background-color: #FFFFFF;
+    color: black;
+    padding: .5em 1em .5em 1em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10%;
+    display: inline-block;
+    }
+    .button:hover {
+    cursor: pointer;
+    }
+    h1 {
+    position: fixed;
+    width: 20em;
+    z-index: 2;
+    font-size: 3em;
+    text-align: center;
+    left: 50%;
+    margin-left: -10em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bubbles</h1>
+  <svg id="svgj" xmlns="http://www.w3.org/2000/svg"></svg>
+  <a class="button clear" onclick="clearAll()">Clear</a>
+  <a class="button move" onclick="move()">Move</a>
+</body>
