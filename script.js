@@ -16,16 +16,24 @@ var linedot = function(e) {
     }
 };
 
-var drawCircle = function(x, y, r) {
+var drawCircle = function(x, y, r, vx, vy) {
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("cx", x);
+    circle.setAttribute("cx", x );
     if (x <= r ) { x += r; }
     if (x >= parseInt(svg.getAttribute("width"))-r) { x -= r; }
     if (y <= r ) { y += r; }
     if (y >= parseInt(svg.getAttribute("height"))-r) { y -= r; }
     circle.setAttribute("cy", y);
-    circle.setAttribute("vx", getRandomPlusOrMinus());
-    circle.setAttribute("vy", getRandomPlusOrMinus());
+    if (vx == undefined) {
+	circle.setAttribute("vx", getRandomPlusOrMinus());
+    } else {
+	circle.setAttribute("vx", vx);
+    }
+    if (vy == undefined) {
+	circle.setAttribute("vy", getRandomPlusOrMinus());
+    } else {
+	circle.setAttribute("vy", vy);
+    }
     circle.setAttribute("r", r);
     circle.setAttribute("fill", "hsl(" + rid % 360 + ", 90%, 60%)");
     //circle.setAttribute("fill", color);
@@ -53,9 +61,22 @@ var draw = function() {
 	    if (parseInt(thisone.getAttribute("cy")) + parseInt(thisone.getAttribute("r")) > parseInt(svg.getAttribute("height")) || parseInt(thisone.getAttribute("cy")) - parseInt(thisone.getAttribute("r")) < 0) {
 		thisone.setAttribute("vy",- parseInt(thisone.getAttribute("vy")));
 	    }
+	    if (parseInt(thisone.getAttribute("cx")) == Math.floor(parseInt(svg.getAttribute("width")) / 2)) {
+		split(thisone);
+	    }
+	    if (parseInt(thisone.getAttribute("r"))<1) {
+		svg.removeChild(thisone);
+	    }
+
 	}
     }
     rid = window.requestAnimationFrame(draw);
+}
+
+var split = function(bubble) {
+    drawCircle(parseInt(bubble.getAttribute("cx")), parseInt(bubble.getAttribute("cy")), Math.floor(parseFloat(bubble.getAttribute("r"))/2), parseInt(bubble.getAttribute("vx")), parseInt(bubble.getAttribute("vy")));
+    drawCircle(parseInt(bubble.getAttribute("cx")), parseInt(bubble.getAttribute("cy")), Math.floor(parseFloat(bubble.getAttribute("r"))/2), - parseInt(bubble.getAttribute("vx")), - parseInt(bubble.getAttribute("vy")));
+    svg.removeChild(bubble);
 }
 
 var move = function() {
