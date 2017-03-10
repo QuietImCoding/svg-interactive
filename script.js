@@ -19,9 +19,13 @@ var linedot = function(e) {
 var drawCircle = function(x, y, r) {
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", x);
+    if (x <= r ) { x += r; }
+    if (x >= parseInt(svg.getAttribute("width"))-r) { x -= r; }
+    if (y <= r ) { y += r; }
+    if (y >= parseInt(svg.getAttribute("height"))-r) { y -= r; }
     circle.setAttribute("cy", y);
-    circle.setAttribute("vx", 1);
-    circle.setAttribute("vy", 1);
+    circle.setAttribute("vx", getRandomPlusOrMinus());
+    circle.setAttribute("vy", getRandomPlusOrMinus());
     circle.setAttribute("r", r);
     circle.setAttribute("fill", "hsl(" + rid % 360 + ", 90%, 60%)");
     //circle.setAttribute("fill", color);
@@ -30,6 +34,13 @@ var drawCircle = function(x, y, r) {
     return circle;
 };
 
+var getRandomPlusOrMinus = function() {
+    if (Math.random() > 0.5) {
+	return 1;
+    }
+    return -1;
+}
+    
 var draw = function() {
     if (moving) {
 	for (i=0; i < svg.childNodes.length; i++) {
@@ -39,7 +50,7 @@ var draw = function() {
 	    if (parseInt(thisone.getAttribute("cx")) + parseInt(thisone.getAttribute("r")) > parseInt(svg.getAttribute("width")) || parseInt(thisone.getAttribute("cx")) - parseInt(thisone.getAttribute("r")) < 0) {
 		thisone.setAttribute("vx", - parseInt(thisone.getAttribute("vx")));
 	    }
-	    if (parseInt(thisone.getAttribute("cy")) + parseInt(thisone.getAttribute("r")) > parseInt(svg.getAttribute("width")) || parseInt(thisone.getAttribute("cy")) - parseInt(thisone.getAttribute("r")) < 0) {
+	    if (parseInt(thisone.getAttribute("cy")) + parseInt(thisone.getAttribute("r")) > parseInt(svg.getAttribute("height")) || parseInt(thisone.getAttribute("cy")) - parseInt(thisone.getAttribute("r")) < 0) {
 		thisone.setAttribute("vy",- parseInt(thisone.getAttribute("vy")));
 	    }
 	}
